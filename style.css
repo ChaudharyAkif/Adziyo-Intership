@@ -3,7 +3,11 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 /* Header */
 header {
   display: flex;
@@ -24,12 +28,25 @@ nav ul li a {
   font-size: 20px;
   text-decoration: none;
 }
+nav ul li a:hover {
+background: white;
+color: #003049;
+padding: 10px;
+border-radius: 10px;
+}
 
+h2 {
+  color: #003049;
+}
 aside {
   float: right;
 }
 
 /* Main  */
+
+main{
+    flex: 1 auto;
+}
 .sectionone {
   text-align: center;
 }
@@ -40,7 +57,58 @@ aside {
   font-weight: 800;
   font-size: 8vh;
 }
-
+/* About Section Start */
+.aboutSection {
+  background: #003049;
+  color: #fff;
+  text-align: center;
+}
+.aboutSection h1 {
+  font-size: 6vh;
+  margin-top: 20px;
+padding-top: 20px;
+}
+.aboutme {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+.aboutcontent {
+  text-align: justify;
+  color: #fff;
+  height: 30vh;
+  width: 30vw;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+.aboutcontent .cvBtn {
+  text-decoration: none;
+  padding: 10px;
+  background: #fff;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  color: #003049;
+  font-size: 20px;
+}
+.aboutimg {
+  /* background: red; */
+  height: 40vh;
+  width: 30vw;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+.mypic {
+  width: 20vw;
+  /* height: 30vh; */
+  background: #fff;
+  border-radius: 200px;
+}
 /* Contact Section Start */
 .contactSection {
   height: 50vh;
@@ -105,4 +173,10 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media screen and (max-width: 685px) {
+  .container {
+   height: 70vh; 
+  }
 }
