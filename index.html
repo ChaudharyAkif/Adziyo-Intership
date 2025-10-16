@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Html Semantic tags</title>
+    <!-- favicon image -->
+    <link
+      rel="shortcut icon"
+      href="/assets/img/html logo.png"
+      type="image/x-icon"
+    />
+    <!-- css Link -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Semantic Tags practice -->
+    <!-- Navigation Start -->
+    <header>
+      <nav style="display: flex; justify-content: center; align-items: center">
+        <ul style="display: flex; gap: 40px">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+    <!-- Navigation Start -->
+    <main>
+      <section class="sectionone">
+        <h1>Muhammad Akif Hussain</h1>
+        <h2>Mern Stack Developer</h2>
+      </section>
+
+      <!-- Contact Section Start -->
+      <section id="contact" class="contactSection">
+        <div class="container">
+          <h2>Contact Form</h2>
+          <form>
+            <label for="name"> Name : </label>
+            <input
+              type="text"
+              id="name"
+              placeholder="Enter Your Name"
+            /><br /><br />
+            <label for="email"> Email : </label>
+            <input type="email" id="email" placeholder="Enter Your Email" />
+            <br /><br />
+            <label for="email"> Message : </label>
+            <textarea
+              name=""
+              id=""
+              cols=""
+              rows=""
+              placeholder="Enter Your Message"
+            ></textarea
+            ><br /><br />
+            <button class="formbtn">Submit</button>
+          </form>
+        </div>
+      </section>
+    </main>
+    <!-- Contact Section Start -->
+
+    <footer>
+      <p>&copy; CopyRight All Right Reserver</p>
+    </footer>
+  </body>
+</html>
