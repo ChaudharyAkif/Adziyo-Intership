@@ -1,0 +1,24 @@
+{
+  "name": "adziyo-intership",
+  "version": "1.0.0",
+  "description": "<h3> Day 1: Learned about Git and GitHub, including basic commands </h3>\r <h3> Day 2: Studied HTML concepts such as forms, lists, tables, meta tags, text formatting, and semantic tags. Also created a simple contact form using semantic HTML and added basic CSS styling along with a favicon.</h3>\r <h3>Day 3 & 4 :Complete Project of Tailwind CSS</h3>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChaudharyAkif/Adziyo-Intership.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChaudharyAkif/Adziyo-Intership/issues"
+  },
+  "homepage": "https://github.com/ChaudharyAkif/Adziyo-Intership#readme",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.15",
+    "tailwindcss": "^4.1.15"
+  }
+}
