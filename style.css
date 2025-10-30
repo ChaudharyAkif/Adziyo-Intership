@@ -1,1 +1,25 @@
-@import "tailwindcss";
+/* @import "tailwindcss"; */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.navbar {
+  background: #14213d !important;
+}
+.navbar a,
+h4 {
+  color: white !important;
+  text-align: center;
+}
+
+#heading1 {
+  color: #14213d;
+}
+#updateTaskButton {
+  display: none;
+  background: #14213d;
+}
+#addTaskButton {
+  background: #14213d;
+}
