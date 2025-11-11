@@ -1,205 +1,160 @@
-interface Todo {
-  id: string;
-  Title: string;
-  Location: string;
-  Discription: string;
-  dateCreated: number;
-  dataModified?: number;
-  status: string;
+const apiKey: string = "dd2fa0931c9451c317652098ae4cbe0d  ";
+const apiUrl: string =
+  "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+const airpollutionUrl: string =
+  "http://api.openweathermap.org/data/2.5/air_pollution";
+
+let getValue = (val: string, content: string): void => {
+  let elment = document.querySelector<HTMLElement>(val);
+  if (elment) {
+    elment.innerHTML = content;
+  }
+};
+
+const weathericon = document.getElementById("weatherimg") as HTMLImageElement;
+const searchbox = document.querySelector("#searchbox") as HTMLInputElement;
+let AirQualitybox = document.querySelector("#quality") as HTMLElement;
+let pm = document.querySelector("#pm") as HTMLElement;
+
+let AirQuality = async (lat: number, lon: number): Promise<void> => {
+  try {
+    let response = await fetch(
+      airpollutionUrl + `?lat=${lat}` + `&lon=${lon}` + `&appid=${apiKey}`
+    );
+    console.log(response);
+    let data: any = await response.json();
+    console.log("data", data);
+    updateAirQulaity(data);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+interface AqiType {
+  aqi: number;
+}
+interface AirQualityPm {
+  pm2_5: number;
+}
+interface AirQualityInnerPart {
+  main: AqiType;
+  components: AirQualityPm;
+}
+interface AirQualityList {
+  list: AirQualityInnerPart[];
 }
 
-const getValue = (val: string): HTMLElement | null => {
-  return document.querySelector(`#${val}`);
-};
-
-const getRandomId = (): string => {
-  return Math.random().toString(36).slice(2);
-};
-
-const emptyTodos = (): void => {
-  const titleEl = getValue("title") as HTMLInputElement;
-  const locationEl = getValue("Location") as HTMLInputElement;
-  const descEl = getValue("Discription") as HTMLInputElement;
-
-  if (titleEl) titleEl.value = "";
-  if (locationEl) locationEl.value = "";
-  if (descEl) descEl.value = "";
-};
-
-const handleSubmit = (): void => {
-  const titleEl = getValue("title") as HTMLInputElement;
-  const locationEl = getValue("Location") as HTMLInputElement;
-  const descEl = getValue("Discription") as HTMLInputElement;
-
-  const Title = titleEl.value.trim();
-  const Location = locationEl.value.trim();
-  const Discription = descEl.value.trim();
-  if (Title.length < 3) {
-    return showNotification("Please enter your Title correctly", "error");
-  }
-  if (Location.length < 3) {
-    return showNotification("Please enter your Location correctly", "error");
-  }
-  if (Discription.length < 8) {
-    return showNotification("Please enter your Description correctly", "error");
-  }
-
-  const todo: Todo = {
-    id: getRandomId(),
-    Title,
-    Location,
-    Discription,
-    dateCreated: new Date().getTime(),
-    status: "active",
-  };
-
-  const todos: Todo[] = JSON.parse(localStorage.getItem("todos") || "[]");
-  todos.push(todo);
-  localStorage.setItem("todos", JSON.stringify(todos));
-
-  showNotification("A new Todo has been successfully created", "success");
-  showTodos();
-  emptyTodos();
-};
-
-const showTodos = (): void => {
-  const todos: Todo[] = JSON.parse(localStorage.getItem("todos") || "[]");
-  const outputEl = getValue("output");
-
-  if (!todos.length) {
-    if (outputEl)
-      outputEl.innerHTML = `<h5>HURRAY! No tasks available. Click Add Task to add your task.</h5>`;
+let updateAirQulaity = (data: AirQualityList) => {
+  let pm2_5 = data.list[0].components.pm2_5;
+  console.log(pm2_5);
+  let aq1 = data.list[0].main.aqi;
+  console.log("asas", pm2_5);
+  console.log("asas", aq1);
+  if (aq1 === 1) {
+    AirQualitybox.innerHTML = `<h2 class="text-green">Good</h2>`;
+    pm.innerHTML = `${pm2_5}`;
     return;
   }
-
-  const tableStartCode = `<div class="table-responsive"><table class="table">`;
-  const tableEndCode = `</table></div>`;
-  const tableHead = `
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Title</th>
-        <th>Location</th>
-        <th>Description</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-  `;
-
-  let tableBody = "";
-  todos.forEach((todo, index) => {
-    tableBody += `
-      <tr>
-        <td>${index + 1}</td>
-        <td>${todo.Title}</td>
-        <td>${todo.Location}</td>
-        <td>${todo.Discription}</td>
-        <td>
-          <button class="btn btn-info btn-sm me-1" data-value="${
-            todo.id
-          }" onclick="handleEdit(event)">
-            <i class="fa-solid fa-pen" data-value="${todo.id}"></i>
-          </button>
-          <button class="btn btn-danger btn-sm" data-value="${
-            todo.id
-          }" onclick="handleDelete(event)">
-            <i class="fa-solid fa-trash" data-value="${todo.id}"></i>
-          </button>
-        </td>
-      </tr>
-    `;
-  });
-
-  const fullTable = `${tableStartCode}${tableHead}<tbody>${tableBody}</tbody>${tableEndCode}`;
-  if (outputEl) outputEl.innerHTML = fullTable;
+  if (aq1 === 2) {
+    AirQualitybox.innerHTML = `<h2 class="text-[#f39c12]">Not Bad</h2>`;
+    pm.innerHTML = `${pm2_5}`;
+    return;
+  }
+  if (aq1 === 3) {
+    AirQualitybox.innerHTML = `<h2 class="text-[orangered]">Moderate</h2>`;
+    pm.innerHTML = `${pm2_5}`;
+    return;
+  }
+  if (aq1 === 4) {
+    AirQualitybox.innerHTML = `<h2 class="text-[red]">Poor</h2>`;
+    pm.innerHTML = `${pm2_5}`;
+    return;
+  }
+  if (aq1 < 5) {
+    AirQualitybox.innerHTML = `<h2 class="text-[red]">Very Poor</h2>`;
+    pm.innerHTML = `${pm2_5}`;
+    return;
+  }
 };
 
-const handleEdit = (e: Event): void => {
-  const target = e.target as HTMLElement;
-  const todoId = target.getAttribute("data-value");
-  if (!todoId) return;
+let checkWeather = async (city: string): Promise<void> => {
+  let response = await fetch(apiUrl + city + `&appid=${apiKey}`);
+  // console.log(response)
+  if (!response.ok) {
+    showNotification("Enter Correct City Name", "error");
+  }
+  let data = await response.json();
+  // console.log(data);
+  getValue("#cityName", data.name);
+  getValue("#temp", Math.round(data.main.temp) + "°C");
+  getValue("#weather", data.weather[0].main);
+  getValue("#humidity", data.main.humidity);
+  getValue("#wind", data.wind.speed);
+  getValue("#pressure", data.main.pressure);
+  console.log(data.main.pressure);
+  if (data.weather[0].main === "Clouds") {
+    weathericon.src = "images/clouds.png";
+  } else if (data.weather[0].main === "Clear") {
+    weathericon.src = "images/clear.png";
+  } else if (data.weather[0].main === "Rain") {
+    weathericon.src = "images/rain.png";
+  } else if (data.weather[0].main === "Drizzle") {
+    weathericon.src = "images/drizzle.png";
+  } else if (
+    data.weather[0].main === "Mist"
+    // (data.weather[0].main === "Haze")
+  ) {
+    weathericon.src = "images/mist.png";
+  } else {
+    weathericon.src = "images/clear.png";
+  }
 
-  const todos: Todo[] = JSON.parse(localStorage.getItem("todos") || "[]");
-  const todo = todos.find((t) => t.id === todoId);
-  if (!todo) return;
-
-  (getValue("title") as HTMLInputElement).value = todo.Title;
-  (getValue("Discription") as HTMLInputElement).value = todo.Discription;
-  (getValue("Location") as HTMLInputElement).value = todo.Location;
-
-  localStorage.setItem("todosforEdit", JSON.stringify(todo));
-
-  (getValue("updateTaskButton") as HTMLElement).style.display = "block";
-  (getValue("addTaskButton") as HTMLElement).style.display = "none";
+  let { lat, lon } = data.coord;
+  // console.log(lat, lon);
+  let a = AirQuality(lat, lon);
+  // console.log(a);
 };
 
-const handleUpdate = (): void => {
-  const todosForEdit: Todo = JSON.parse(
-    localStorage.getItem("todosforEdit") || "{}"
-  );
+let handleSearch = () => {
+  showNotification("getting Data of Weather", "success");
 
-  const updatedTitle = (getValue("title") as HTMLInputElement).value;
-  const updatedLocation = (getValue("Location") as HTMLInputElement).value;
-  const updatedDescription = (getValue("Discription") as HTMLInputElement)
-    .value;
+  let getingvalueinout = searchbox.value;
+  if (!getingvalueinout) {
+    return showNotification("ENTER YOUR cITY nAME", "error");
+  }
+  if (getingvalueinout.length < 3) {
+    return showNotification("Enter Correct City Name ", "error");
+  }
+  setTimeout(() => {
+    checkWeather(getingvalueinout);
+  }, 100);
+  console.log(getingvalueinout);
+  showNotification("successfully done", "success");
 
-  const updatedTodo: Todo = {
-    ...todosForEdit,
-    Title: updatedTitle,
-    Location: updatedLocation,
-    Discription: updatedDescription,
-    dataModified: new Date().getTime(),
-  };
-
-  const todos: Todo[] = JSON.parse(localStorage.getItem("todos") || "[]");
-  const updatedTodos = todos.map((todo) =>
-    todo.id === todosForEdit.id ? updatedTodo : todo
-  );
-
-  localStorage.setItem("todos", JSON.stringify(updatedTodos));
-  showTodos();
-  emptyTodos();
-  showNotification("Todo successfully updated", "success");
-
-  (getValue("addTaskButton") as HTMLElement).style.display = "block";
-  (getValue("updateTaskButton") as HTMLElement).style.display = "none";
+  searchbox.value = " ";
 };
 
-const handleDelete = (e: Event): void => {
-  const target = e.target as HTMLElement;
-  const todoId = target.getAttribute("data-value");
-  if (!todoId) return;
-
-  const todos: Todo[] = JSON.parse(localStorage.getItem("todos") || "[]");
-  const remainingTodos = todos.filter((todo) => todo.id !== todoId);
-
-  localStorage.setItem("todos", JSON.stringify(remainingTodos));
-  showNotification("Todo successfully deleted", "success");
-  showTodos();
-};
-
-function showNotification(
-  msg: string,
-  type: "success" | "error" | "info"
-): void {
-  let bgColor: string;
+function showNotification(msg: string, type: string) {
+  let bgColor;
   switch (type) {
     case "success":
-      bgColor = "linear-gradient(to right, #1D976C, #93F989)";
+      bgColor = "Linear-gradient(to right ,#1D976C,#93f989";
       break;
     case "error":
-      bgColor = "linear-gradient(to right, #93291E, #ED213A)";
+      bgColor = "Linear-gradient(to right ,#93291e,#ed213a";
       break;
     default:
       bgColor = "#000";
   }
-
   Toastify({
     text: msg,
-    duration: 3000,
+    duration: 100,
+    destination: "https://github.com/apvarun/toastify-js",
+    newWindow: true,
     close: true,
     gravity: "top",
     position: "right",
+    stopOnFocus: true,
     style: {
       background: bgColor,
       color: "#fff",
@@ -207,21 +162,7 @@ function showNotification(
   }).showToast();
 }
 
-window.onload = (): void => {
-  showTodos();
-
-  const yearEl = getValue("year");
-  if (yearEl) yearEl.innerHTML = new Date().getFullYear().toString();
-
-  const userName = prompt("What's your name?");
-  (getValue("name") as HTMLElement).innerHTML = `Hi ${userName}!`;
+window.onload = function () {
+  checkWeather("Faisalabad");
+  console.log("Page is fully loaded!");
 };
-
-(window as any).handleSubmit = handleSubmit;
-(window as any).handleEdit = handleEdit;
-(window as any).handleDelete = handleDelete;
-(window as any).handleUpdate = handleUpdate;
-
-let value: string = "Hello World";
-let lengthOfValue = (value as string).length;
-console.log(lengthOfValue);
