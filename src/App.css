@@ -1,8 +1,8 @@
-* {
+    * {
     box-sizing: border-box;
-}
+    }
 
-body {
+    body {
     --background-color: white;
     --text-color: black;
     --elements-color: white;
@@ -10,56 +10,68 @@ body {
     font-family: Nunito, sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
-}
+    }
 
-body.dark {
-    --background-color: hsl(207, 26%, 17%); 
+    main,
+    header {
+    background: var(--background-color);
+    color: var(--text-color);
+    }
+    main {
+    padding: 24px;
+    min-height: 88vh;
+    }
+    header {
+    position: sticky;
+    top: 0;
+    z-index: 11;
+    }
+    main.dark,
+    header.dark {
+    --background-color: hsl(207, 26%, 17%);
     --text-color: white;
     --elements-color: hsl(209, 23%, 22%);
-}
+    }
 
-main {
-    padding: 24px;
-}
-
-a {
+    a {
     text-decoration-line: none;
     color: inherit;
-}
+    }
 
-.header-container {
+    .header-container {
     box-shadow: 0 2px 4px 0px rgba(0, 0, 0, 0.1);
     padding-inline: 24px;
     background-color: var(--elements-color);
-}
+    }
 
-.header-content {
+    .header-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
     max-width: 1200px;
     margin-inline: auto;
-}
+    }
 
-.title {
+    .title {
     font-weight: 800;
-}
-
-.theme-changer {
+    }
+    .header-content p {
     cursor: pointer;
-}
+    }
+    .theme-changer {
+    cursor: pointer;
+    }
 
-.countries-container {
+    .countries-container {
     max-width: 1200px;
     margin-top: 16px;
-    display: flex;
-    gap: 64px;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 32px;
     margin-inline: auto;
-    justify-content: space-between;
-}
+    }
 
-.country-card {
+    .country-card {
     display: inline-block;
     width: 250px;
     border-radius: 8px;
@@ -68,34 +80,33 @@ a {
     box-shadow: 0 0 8px 0px rgba(0, 0, 0, 0.2);
     transition: all 0.2s ease-in-out;
     background-color: var(--elements-color);
-}
+    }
 
-.country-card:hover {
+    .country-card:hover {
     transform: scale(1.03);
     box-shadow: 0 0 16px 0px rgba(0, 0, 0, 0.2);
-}
+    }
 
-.card-title {
+    .card-title {
     font-size: 24px;
     margin-block: 16px;
-}
+    }
 
-.card-text {
+    .card-text {
     padding-inline: 16px;
-}
+    }
 
-.card-text p {
+    .card-text p {
     margin-block: 8px;
-}
+    }
 
-.country-card img {
+    .country-card img {
     width: 100%;
     height: 50%;
     object-fit: cover;
-}
+    }
 
-
-.search-filter-container {
+    .search-filter-container {
     max-width: 1200px;
     margin-inline: auto;
     margin-top: 16px;
@@ -103,9 +114,9 @@ a {
     display: flex;
     justify-content: space-between;
     gap: 24px;
-}
+    }
 
-.search-container {
+    .search-container {
     box-shadow: 0 0 8px 0px rgba(0, 0, 0, 0.15);
     max-width: 350px;
     width: 100%;
@@ -115,22 +126,22 @@ a {
     overflow: hidden;
     background-color: var(--elements-color);
     color: var(--text-color);
-}
+    }
 
-.search-container input {
+    .search-container input {
     border: none;
     outline: none;
     padding: 16px;
     width: 90%;
     background-color: inherit;
     color: inherit;
-}
+    }
 
-.search-container input::placeholder {
+    .search-container input::placeholder {
     color: #999;
-}
+    }
 
-.filter-by-region {
+    .filter-by-region {
     width: 250px;
     padding: 16px;
     border: none;
@@ -139,9 +150,9 @@ a {
     border-radius: 4px;
     background-color: var(--elements-color);
     color: var(--text-color);
-}
+    }
 
-@media(max-width: 768px) {
+    @media (max-width: 768px) {
     .countries-container {
         justify-content: center;
     }
@@ -157,5 +168,4 @@ a {
     .search-filter-container {
         flex-direction: column;
     }
-    
-}
+    }
